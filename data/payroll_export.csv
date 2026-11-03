@@ -1,0 +1,7 @@
+EmpID,FullName,Role,Department,BaseSalary,OvertimeHrs,PerkMask,GrossPay,Tax,PF,NetPay
+101,"Aarav Sharma","Engineering Manager (Team: 6)",Platform,95000.00,18,13,146386.25,24915.88,11400.00,110070.00
+102,"Diya Nair","Full-Time Engineer",Backend,58000.00,18,3,78555.35,6711.07,6960.00,64884.00
+103,"Rohan Verma","Full-Time Engineer",Security,44000.00,18,4,60609.00,3121.80,5280.00,52207.00
+104,"Sneha Reddy","Part-Time Intern",AI-Lab,25600.00,18,1,26100.00,55.00,0.00,26045.00
+105,"Vikram Patel","Contract Consultant",DevOps,40000.00,18,5,62000.00,6200.00,0.00,55800.00
+106,"sampath vulli","Full-Time Engineer",Marketing,75000.00,18,5,98939.90,10787.98,9000.00,79152.00

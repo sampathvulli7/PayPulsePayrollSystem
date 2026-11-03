@@ -1,0 +1,102 @@
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #6001 | Period: NOV-2026 | DeptCode: AIL
+ Employee   : Sneha Reddy (ID: 104)
+ Designation: Part-Time Intern
+ Bank A/C   : ******3210
+ Perks      : [Coffee] (Mask:00001)
+--------------------------------------------------------------
+ Gross Earnings     : ₹ 26,100.00
+ Provident Fund (PF): -₹     0.00
+ Income Tax (TDS)   : -₹    55.00
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹ 26,045.00
+--------------------------------------------------------------
+ Watermark Hash     : 54062-401PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #5001 | Period: NOV-2026 | DeptCode: PLA
+ Employee   : Aarav Sharma (ID: 101)
+ Designation: Engineering Manager (Team: 6)
+ Bank A/C   : ********9012
+ Perks      : [Coffee] [WFH-WiFi] [NightCab] (Mask:01101)
+--------------------------------------------------------------
+ Gross Earnings     : ₹146,386.25
+ Provident Fund (PF): -₹11,400.00
+ Income Tax (TDS)   : -₹24,915.88
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹110,070.00
+--------------------------------------------------------------
+ Watermark Hash     : 070011-101PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #6002 | Period: NOV-2026 | DeptCode: DEV
+ Employee   : Vikram Patel (ID: 105)
+ Designation: Contract Consultant
+ Bank A/C   : ********2211
+ Perks      : [Coffee] [WFH-WiFi] (Mask:00101)
+--------------------------------------------------------------
+ Gross Earnings     : ₹ 62,000.00
+ Provident Fund (PF): -₹     0.00
+ Income Tax (TDS)   : -₹ 6,200.00
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹ 55,800.00
+--------------------------------------------------------------
+ Watermark Hash     : 00855-501PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #5002 | Period: NOV-2026 | DeptCode: BAC
+ Employee   : Diya Nair (ID: 102)
+ Designation: Full-Time Engineer
+ Bank A/C   : ********8811
+ Perks      : [Coffee] [Gym] (Mask:00011)
+--------------------------------------------------------------
+ Gross Earnings     : ₹ 78,555.35
+ Provident Fund (PF): -₹ 6,960.00
+ Income Tax (TDS)   : -₹ 6,711.07
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹ 64,884.00
+--------------------------------------------------------------
+ Watermark Hash     : 48846-201PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #5003 | Period: NOV-2026 | DeptCode: SEC
+ Employee   : Rohan Verma (ID: 103)
+ Designation: Full-Time Engineer
+ Bank A/C   : ********5522
+ Perks      : [WFH-WiFi] (Mask:00100)
+--------------------------------------------------------------
+ Gross Earnings     : ₹ 60,609.00
+ Provident Fund (PF): -₹ 5,280.00
+ Income Tax (TDS)   : -₹ 3,121.80
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹ 52,207.00
+--------------------------------------------------------------
+ Watermark Hash     : 70225-301PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #6003 | Period: NOV-2026 | DeptCode: MAR
+ Employee   : sampath vulli (ID: 106)
+ Designation: Full-Time Engineer
+ Bank A/C   : ********1100
+ Perks      : [Coffee] [WFH-WiFi] (Mask:00101)
+--------------------------------------------------------------
+ Gross Earnings     : ₹ 98,939.90
+ Provident Fund (PF): -₹ 9,000.00
+ Income Tax (TDS)   : -₹10,787.98
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹ 79,152.00
+--------------------------------------------------------------
+ Watermark Hash     : 25197-601PME (BufCap: 39->1026)
+==============================================================
+

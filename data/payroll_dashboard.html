@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PayPulse — Payroll Ledger</title>
+  <style>
+    :root { --bg: #fff; --sub: #fafafa; --border: #e4e4e7; --text: #09090b; --muted: #71717a; --green: #15803d; --red: #b91c1c; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); padding: 24px; max-width: 1100px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    h1 { font-size: 20px; font-weight: 600; }
+    .controls { display: flex; gap: 8px; }
+    input, select, button { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; outline: none; }
+    button { background: var(--sub); cursor: pointer; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .kpi { border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; }
+    .kpi small { color: var(--muted); text-transform: uppercase; font-size: 11px; font-weight: 600; }
+    .kpi div { font-size: 20px; font-weight: 700; font-family: monospace; margin-top: 4px; }
+    .tbl-wrap { border: 1px solid var(--border); border-radius: 6px; overflow-x: auto; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 9px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th { background: var(--sub); font-size: 11px; color: var(--muted); text-transform: uppercase; cursor: pointer; user-select: none; }
+    tbody tr:hover { background: var(--sub); cursor: pointer; }
+    .r { text-align: right; }
+    .c { text-align: center; }
+    .mono { font-family: monospace; }
+    .green { color: var(--green); font-weight: 600; }
+    .red { color: var(--red); }
+    .badge { padding: 2px 6px; border: 1px solid var(--border); border-radius: 4px; font-size: 11px; background: var(--sub); }
+    #detailPanel { display: none; border: 1px solid var(--border); border-radius: 6px; background: var(--sub); padding: 16px; margin-bottom: 20px; }
+    .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 10px; }
+    .detail-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; }
+    .detail-card div { display: flex; justify-content: space-between; margin-top: 4px; }
+    footer { font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <header>
+    <div><h1>PayPulse Ledger</h1><p style="color:var(--muted); font-size:12px;">Employee Compensation &amp; Audit Dashboard</p></div>
+    <div class="controls">
+      <input id="q" type="text" placeholder="Search name/dept/ID..." oninput="filter()">
+      <select id="role" onchange="filter()"><option value="ALL">All Roles</option><option value="Manager">Manager</option><option value="Full-Time">Full-Time</option><option value="Intern">Intern</option><option value="Consultant">Consultant</option></select>
+      <button onclick="reset()">Reset</button>
+    </div>
+  </header>
+
+  <div class="kpi-grid">
+    <div class="kpi"><small>Total Net Pay</small><div id="kNet" class="green">₹0</div></div>
+    <div class="kpi"><small>Gross Payroll</small><div id="kGross">₹0</div></div>
+    <div class="kpi"><small>Tax Withholding (TDS)</small><div id="kTax" class="red">₹0</div></div>
+    <div class="kpi"><small>Headcount</small><div id="kCount">0</div></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sort('id')">ID</th><th onclick="sort('name')">Employee</th><th onclick="sort('role')">Role</th><th onclick="sort('dept')">Department</th>
+          <th class="r" onclick="sort('base')">Base Salary</th><th class="c">Perks</th><th class="r" onclick="sort('gross')">Gross</th>
+          <th class="r" onclick="sort('tax')">Tax (TDS)</th><th class="r" onclick="sort('pf')">PF (12%)</th><th class="r" onclick="sort('net')">Net Take-Home</th>
+        </tr>
+      </thead>
+      <tbody id="tbl"></tbody>
+    </table>
+  </div>
+
+  <div id="detailPanel">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <strong id="dName" style="font-size:14px;">Employee Details</strong>
+      <button onclick="document.getElementById('detailPanel').style.display='none'">Close</button>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card"><small>BASE EARNINGS</small><div><span>Base</span><b id="dBase" class="mono">₹0</b></div><div><span>Overtime</span><span id="dOt">0 hrs</span></div></div>
+      <div class="detail-card"><small>VARIABLE EARNINGS</small><div><span>Perks &amp; OT</span><span id="dExtra" class="mono">₹0</span></div><div><span>Gross Total</span><b id="dGross" class="mono">₹0</b></div></div>
+      <div class="detail-card"><small>DEDUCTIONS</small><div><span>TDS Tax</span><span id="dTax" class="red mono">₹0</span></div><div><span>Provident Fund</span><span id="dPf" class="mono">₹0</span></div></div>
+      <div class="detail-card" style="border-color:#bbf7d0; background:#f0fdf4;"><small style="color:var(--green)">DISBURSEMENT</small><div><span>Net Pay</span><b id="dNet" class="green mono">₹0</b></div><div><span>Retention</span><span id="dRet" style="color:var(--muted)">0%</span></div></div>
+    </div>
+  </div>
+
+  <footer><span>PayPulse CLI Export System</span><span>Click any row for detailed pay stub</span></footer>
+
+  <script>
+    const employees = [
+      { id: 101, name: "Aarav Sharma", role: "Engineering Manager (Team: 6)", dept: "Platform", base: 95000.00, ot: 18, perkMask: 13, gross: 146386.25, tax: 24915.88, pf: 11400.00, net: 110070.00 },
+      { id: 102, name: "Diya Nair", role: "Full-Time Engineer", dept: "Backend", base: 58000.00, ot: 18, perkMask: 3, gross: 78555.35, tax: 6711.07, pf: 6960.00, net: 64884.00 },
+      { id: 103, name: "Rohan Verma", role: "Full-Time Engineer", dept: "Security", base: 44000.00, ot: 18, perkMask: 4, gross: 60609.00, tax: 3121.80, pf: 5280.00, net: 52207.00 },
+      { id: 104, name: "Sneha Reddy", role: "Part-Time Intern", dept: "AI-Lab", base: 25600.00, ot: 18, perkMask: 1, gross: 26100.00, tax: 55.00, pf: 0.00, net: 26045.00 },
+      { id: 105, name: "Vikram Patel", role: "Contract Consultant", dept: "DevOps", base: 40000.00, ot: 18, perkMask: 5, gross: 62000.00, tax: 6200.00, pf: 0.00, net: 55800.00 },
+      { id: 106, name: "sampath vulli", role: "Full-Time Engineer", dept: "Marketing", base: 75000.00, ot: 18, perkMask: 5, gross: 98939.90, tax: 10787.98, pf: 9000.00, net: 79152.00 }
+    ];
+
+    let list = [...employees], sField = 'net', sAsc = false;
+    const fmt = n => '₹' + Math.round(n).toLocaleString('en-IN');
+    const perks = m => ['Coffee','Gym','WiFi','Cab'].filter((_, i) => m & (1 << i)).map(p => `<span class="badge">${p}</span>`).join(' ') || '—';
+
+    function render() {
+      const net = list.reduce((s, e) => s + e.net, 0);
+      const gross = list.reduce((s, e) => s + e.gross, 0);
+      const tax = list.reduce((s, e) => s + e.tax, 0);
+      document.getElementById('kNet').innerText = fmt(net);
+      document.getElementById('kGross').innerText = fmt(gross);
+      document.getElementById('kTax').innerText = fmt(tax);
+      document.getElementById('kCount').innerText = list.length;
+
+      document.getElementById('tbl').innerHTML = list.map(e => `
+        <tr onclick="inspect(${e.id})">
+          <td class="mono" style="color:var(--muted)">#${e.id}</td><td><b>${e.name}</b></td><td><span class="badge">${e.role.split(' ')[0]}</span></td>
+          <td style="color:var(--muted)">${e.dept}</td><td class="r mono">${fmt(e.base)}</td><td class="c">${perks(e.perkMask)}</td>
+          <td class="r mono">${fmt(e.gross)}</td><td class="r mono red">-${fmt(e.tax)}</td><td class="r mono" style="color:var(--muted)">-${fmt(e.pf)}</td><td class="r mono green">${fmt(e.net)}</td>
+        </tr>`).join('');
+    }
+
+    function filter() {
+      const q = document.getElementById('q').value.toLowerCase().trim();
+      const r = document.getElementById('role').value;
+      list = employees.filter(e => (!q || e.name.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q) || (''+e.id).includes(q)) && (r === 'ALL' || e.role.includes(r)));
+      applySort();
+      render();
+    }
+
+    function sort(f) {
+      if (sField === f) sAsc = !sAsc;
+      else { sField = f; sAsc = (typeof employees[0][f] === 'string'); }
+      applySort();
+      render();
+    }
+
+    function applySort() {
+      list.sort((a, b) => typeof a[sField] === 'string' ? (sAsc ? a[sField].localeCompare(b[sField]) : b[sField].localeCompare(a[sField])) : (sAsc ? a[sField] - b[sField] : b[sField] - a[sField]));
+    }
+
+    function reset() {
+      document.getElementById('q').value = ''; document.getElementById('role').value = 'ALL';
+      sField = 'net'; sAsc = false; list = [...employees]; applySort(); render();
+      document.getElementById('detailPanel').style.display = 'none';
+    }
+
+    function inspect(id) {
+      const e = employees.find(x => x.id === id); if (!e) return;
+      document.getElementById('detailPanel').style.display = 'block';
+      document.getElementById('dName').innerText = `${e.name} (#${e.id}) — ${e.role} (${e.dept})`;
+      document.getElementById('dBase').innerText = fmt(e.base);
+      document.getElementById('dOt').innerText = `${e.ot} hrs`;
+      document.getElementById('dExtra').innerText = '+' + fmt(e.gross - e.base);
+      document.getElementById('dGross').innerText = fmt(e.gross);
+      document.getElementById('dTax').innerText = '-' + fmt(e.tax);
+      document.getElementById('dPf').innerText = '-' + fmt(e.pf);
+      document.getElementById('dNet').innerText = fmt(e.net);
+      document.getElementById('dRet').innerText = Math.round((e.net / e.gross) * 100) + '%';
+    }
+
+    applySort();
+    render();
+  </script>
+</body>
+</html>
