@@ -3,7 +3,7 @@
 [![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](#prerequisites)
 [![Architecture](https://img.shields.io/badge/Design-Pure%20OOP-orange.svg)](#core-concepts--usage)
 
-A modular, zero-dependency Java payroll processing engine featuring a command-line interface, multi-threaded batch processing, bitwise perk encoding, and an interactive HTML audit ledger.
+A modular, zero-dependency Java payroll processing engine featuring role-based authentication, multi-threaded batch processing, bitwise perk encoding, and an interactive HTML audit ledger.
 
 ---
 
@@ -12,6 +12,7 @@ A modular, zero-dependency Java payroll processing engine featuring a command-li
 PayPulse simulates a modern enterprise compensation platform. It models diverse employment structures—including salaried engineers, engineering managers, hourly interns, and milestone-based contractors—calculating deductions, income tax slabs, provident fund contributions, and custom benefits.
 
 ### Key Capabilities
+- **Role-Based Access Control**: Secure portal separation between Payroll Managers (full administrative control) and Employees/Interns (isolated self-service access).
 - **Polymorphic Pay Engine**: Dynamically calculates pay structures across different employee contracts.
 - **Concurrent Batch Processor**: Spawns concurrent worker threads synchronized over a thread-safe slip vault.
 - **Bitwise Perk Ledger**: Encodes multiple employee perks into a compact integer bitmask.
@@ -25,7 +26,7 @@ The application is structured to demonstrate fundamental object-oriented and sys
 
 | Concept | Where Used | Real-World Purpose |
 | :--- | :--- | :--- |
-| **Encapsulation & Abstraction** | [`Employee.java`](src/edu/gitam/oop/payroll/model/Employee.java) | Hides internal state (IDs, salaries, bitmasks); exposes clean domain APIs. |
+| **Encapsulation & Access Control** | [`Employee.java`](src/edu/gitam/oop/payroll/model/Employee.java), [`PayrollRouter.java`](src/edu/gitam/oop/payroll/ui/PayrollRouter.java) | Encapsulates passwords and private state; uses `instanceof Manager` to enforce portal access boundaries. |
 | **Inheritance & Polymorphism** | [`Person.java`](src/edu/gitam/oop/payroll/model/Person.java) & subclasses | Multi-level hierarchy (`Person` $\rightarrow$ `Employee` $\rightarrow$ `FullTimeEmployee` $\rightarrow$ `Manager`) with runtime method dispatch for gross and net pay. |
 | **Bitwise Operators** | [`PerkBitmaskUtil.java`](src/edu/gitam/oop/payroll/util/PerkBitmaskUtil.java) | Packs employee perks (Coffee, Gym, WiFi, Cab) into a single integer mask using `&`, `|`, `^`, `~`, and left-shift (`<<`) for executive multipliers. |
 | **Jagged 2D Arrays** | [`Employee.java`](src/edu/gitam/oop/payroll/model/Employee.java) | Models non-uniform work weeks where each week can have a different number of logged work days. |
@@ -87,6 +88,9 @@ run.bat
 
 ### Run with Options
 ```bash
+# Direct Manager CLI mode (bypasses portal for automation/admin)
+./run --admin
+
 # Automated non-interactive batch demo
 ./run --demo
 
@@ -96,8 +100,11 @@ run.bat
 
 ### Run via Standalone Executable JAR
 ```bash
-# Interactive menu
+# Interactive portal & login
 java -jar paypulse.jar
+
+# Direct Manager mode
+java -jar paypulse.jar --admin
 
 # Automated batch showcase
 java -jar paypulse.jar --demo
@@ -145,6 +152,6 @@ The project includes built-in verification scripts:
 # Lint check and compilation audit
 ./tools/verify.sh
 
-# Run end-to-end automated test suite across all 10 menu workflows
+# Run end-to-end automated test suite across all 12 menu & portal workflows
 ./tools/test_flows.sh
 ```
