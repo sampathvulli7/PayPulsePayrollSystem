@@ -95,12 +95,9 @@ public class PayrollRouter {
             System.out.println(style(YELLOW, " [First-Time Setup] No password set. Please create your Manager password."));
             adminPassword = input.readString("Set Admin Password: ");
             System.out.println(style(GREEN, " -> Admin password set successfully!"));
-        } else {
-            String pwd = input.readString("Enter Manager Password: ");
-            if (!adminPassword.equals(pwd)) {
-                System.out.println(style(RED, " -> Incorrect password! Access denied."));
-                return;
-            }
+        } else if (!adminPassword.equals(input.readString("Enter Manager Password: "))) {
+            System.out.println(style(RED, " -> Incorrect password! Access denied."));
+            return;
         }
 
         System.out.println(style(GREEN, " -> Login successful! Welcome, " + (matched != null ? matched.getFullName() : "Administrator") + "."));
@@ -121,15 +118,11 @@ public class PayrollRouter {
 
         if (!emp.hasPassword()) {
             System.out.println(style(YELLOW, " [First-Time Setup] Welcome, " + emp.getFullName() + "! Please set your personal password."));
-            String pwd = input.readString("Set Personal Password: ");
-            emp.setPassword(pwd);
+            emp.setPassword(input.readString("Set Personal Password: "));
             System.out.println(style(GREEN, " -> Password created successfully."));
-        } else {
-            String pwd = input.readString("Enter password for " + emp.getFullName() + ": ");
-            if (!emp.verifyPassword(pwd)) {
-                System.out.println(style(RED, " -> Incorrect password! Access denied."));
-                return;
-            }
+        } else if (!emp.verifyPassword(input.readString("Enter password for " + emp.getFullName() + ": "))) {
+            System.out.println(style(RED, " -> Incorrect password! Access denied."));
+            return;
         }
 
         System.out.println(style(GREEN, " -> Login successful! Welcome, " + emp.getFullName() + "."));
@@ -144,17 +137,13 @@ public class PayrollRouter {
         do {
             System.out.println(style(BOLD, "\n--- EMPLOYEE SELF-SERVICE PORTAL ---"));
             System.out.println(" Logged in: " + emp.getFullName() + " | Role: " + emp.getRoleTitle() + " | Dept: " + emp.getDepartment());
-            System.out.println(" [1] View My Payslip (Itemized Salary & Take-Home)");
-            System.out.println(" [2] View My Active Benefits & Perks");
-            System.out.println(" [3] View My Overtime & Attendance Record");
-            System.out.println(" [0] Logout");
+            System.out.println(" [1] View My Payslip (Itemized Salary & Take-Home)\n [2] View My Benefits & Perks\n [3] View My Overtime & Attendance Record\n [0] Logout");
 
             choice = input.readInt("Select action [0-3]: ", 0, 3);
             switch (choice) {
                 case 1:
                     System.out.println(style(CYAN, "\n=== My Official Payslip ==="));
-                    PaySlip slip = PaySlip.generateFor(emp, 1000 + emp.getEmpId());
-                    System.out.println(PayslipFormatter.formatAsciiSlip(slip));
+                    System.out.println(PayslipFormatter.formatAsciiSlip(PaySlip.generateFor(emp, 1000 + emp.getEmpId())));
                     break;
                 case 2:
                     System.out.println(style(CYAN, "\n=== My Benefits & Perks ==="));
@@ -450,12 +439,7 @@ public class PayrollRouter {
         if (query == null || query.trim().isEmpty()) return null;
         String q = query.trim().toLowerCase();
         for (Employee e : staffList) {
-            if (String.valueOf(e.getEmpId()).equals(q) || e.getFullName().equalsIgnoreCase(q)) {
-                return e;
-            }
-        }
-        for (Employee e : staffList) {
-            if (e.getFullName().toLowerCase().startsWith(q)) {
+            if (String.valueOf(e.getEmpId()).equals(q) || e.getFullName().toLowerCase().contains(q)) {
                 return e;
             }
         }

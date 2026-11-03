@@ -1,22 +1,5 @@
 [CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
 ==============================================================
- Slip ID    : #5001 | Period: NOV-2026 | DeptCode: PLA
- Employee   : Aarav Sharma (ID: 101)
- Designation: Engineering Manager (Team: 6)
- Bank A/C   : ********9012
- Perks      : [Coffee] [WFH-WiFi] [NightCab] (Mask:01101)
---------------------------------------------------------------
- Gross Earnings     : ₹146,386.25
- Provident Fund (PF): -₹11,400.00
- Income Tax (TDS)   : -₹24,915.88
---------------------------------------------------------------
- NET TAKE-HOME PAY  : ₹110,070.00
---------------------------------------------------------------
- Watermark Hash     : 070011-101PME (BufCap: 39->1026)
-==============================================================
-
-[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
-==============================================================
  Slip ID    : #6001 | Period: NOV-2026 | DeptCode: AIL
  Employee   : Sneha Reddy (ID: 104)
  Designation: Part-Time Intern
@@ -30,6 +13,23 @@
  NET TAKE-HOME PAY  : ₹ 26,045.00
 --------------------------------------------------------------
  Watermark Hash     : 54062-401PME (BufCap: 39->1026)
+==============================================================
+
+[CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
+==============================================================
+ Slip ID    : #5001 | Period: NOV-2026 | DeptCode: PLA
+ Employee   : Aarav Sharma (ID: 101)
+ Designation: Engineering Manager (Team: 6)
+ Bank A/C   : ********9012
+ Perks      : [Coffee] [WFH-WiFi] [NightCab] (Mask:01101)
+--------------------------------------------------------------
+ Gross Earnings     : ₹146,386.25
+ Provident Fund (PF): -₹11,400.00
+ Income Tax (TDS)   : -₹24,915.88
+--------------------------------------------------------------
+ NET TAKE-HOME PAY  : ₹110,070.00
+--------------------------------------------------------------
+ Watermark Hash     : 070011-101PME (BufCap: 39->1026)
 ==============================================================
 
 [CONFIDENTIAL] PAYPULSE OFFICIAL SLIP
