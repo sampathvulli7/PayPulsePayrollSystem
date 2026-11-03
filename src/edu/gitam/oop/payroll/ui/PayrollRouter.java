@@ -18,9 +18,10 @@ import static edu.gitam.oop.payroll.ui.PayrollTheme.*;
 import static edu.gitam.oop.payroll.util.PayrollConstants.*;
 
 /**
- * Controller & CLI Router
+ * Controller & CLI Router with Role-Based Authentication
  * Demonstrates:
  * - Unit 1: Control structures (do-while, switch, for, enhanced-for)
+ * - Unit 2: Encapsulated credentials, Scanner & BufferedReader, Method Overloading
  * - Unit 3: Dynamic dispatch, Vector vs ArrayList, Downcasting & Iterator
  * - Unit 4: Interface references (Payable, AuditLoggable)
  * - Unit 5: Multithreading and Exception Handling
@@ -30,6 +31,9 @@ public class PayrollRouter {
     private final List<Employee> staffList = new ArrayList<>();
     private final Vector<PaySlip> batchSlipVault = new Vector<>();
     private final InputHelper input = new InputHelper();
+
+    // Password for Manager / HR Admin portal (set on first login)
+    private String adminPassword = null;
 
     public PayrollRouter() {
         seedSampleEmployees();
@@ -49,10 +53,134 @@ public class PayrollRouter {
     }
 
     public void startMenuLoop() {
+        startPortalLoop();
+    }
+
+    /**
+     * Top-Level Portal & Login Screen
+     */
+    public void startPortalLoop() {
+        PayrollTheme.printBanner();
+        int portalChoice;
+        do {
+            System.out.println(style(BOLD, "\n--- LOGIN / SELECT PORTAL ---"));
+            System.out.println(" [1] Payroll Manager / HR Admin (Full Access)");
+            System.out.println(" [2] Employee Self-Service (Personal Records Only)");
+            System.out.println(" [0] Exit Application");
+
+            portalChoice = input.readInt("Select portal [0-2]: ", 0, 2);
+            switch (portalChoice) {
+                case 1: loginManagerFlow(); break;
+                case 2: loginEmployeeFlow(); break;
+                case 0: System.out.println(style(GREEN, "Exiting PayPulse. Goodbye!")); break;
+            }
+        } while (portalChoice != 0);
+    }
+
+    /**
+     * Manager / Admin Authentication Flow
+     */
+    private void loginManagerFlow() {
+        System.out.println(style(CYAN, "\n=== Payroll Manager / HR Admin Login ==="));
+        String user = input.readString("Enter Manager Name or ID [default: admin]: ");
+        if (user.isEmpty()) user = "admin";
+
+        Employee matched = findEmployee(user);
+        if (matched != null && !(matched instanceof Manager)) {
+            System.out.println(style(RED, " -> Access Denied: " + matched.getFullName() + " is not an authorized Manager."));
+            return;
+        }
+
+        if (adminPassword == null) {
+            System.out.println(style(YELLOW, " [First-Time Setup] No password set. Please create your Manager password."));
+            adminPassword = input.readString("Set Admin Password: ");
+            System.out.println(style(GREEN, " -> Admin password set successfully!"));
+        } else {
+            String pwd = input.readString("Enter Manager Password: ");
+            if (!adminPassword.equals(pwd)) {
+                System.out.println(style(RED, " -> Incorrect password! Access denied."));
+                return;
+            }
+        }
+
+        System.out.println(style(GREEN, " -> Login successful! Welcome, " + (matched != null ? matched.getFullName() : "Administrator") + "."));
+        startManagerMenuLoop();
+    }
+
+    /**
+     * Employee Self-Service Authentication Flow
+     */
+    private void loginEmployeeFlow() {
+        System.out.println(style(CYAN, "\n=== Employee Self-Service Login ==="));
+        String query = input.readString("Enter your Employee ID or Name: ");
+        Employee emp = findEmployee(query);
+        if (emp == null) {
+            System.out.println(style(RED, " -> Employee record not found for: " + query));
+            return;
+        }
+
+        if (!emp.hasPassword()) {
+            System.out.println(style(YELLOW, " [First-Time Setup] Welcome, " + emp.getFullName() + "! Please set your personal password."));
+            String pwd = input.readString("Set Personal Password: ");
+            emp.setPassword(pwd);
+            System.out.println(style(GREEN, " -> Password created successfully."));
+        } else {
+            String pwd = input.readString("Enter password for " + emp.getFullName() + ": ");
+            if (!emp.verifyPassword(pwd)) {
+                System.out.println(style(RED, " -> Incorrect password! Access denied."));
+                return;
+            }
+        }
+
+        System.out.println(style(GREEN, " -> Login successful! Welcome, " + emp.getFullName() + "."));
+        startEmployeeSelfServiceLoop(emp);
+    }
+
+    /**
+     * Restricted Self-Service Portal for Regular Employees & Interns
+     */
+    private void startEmployeeSelfServiceLoop(Employee emp) {
+        int choice;
+        do {
+            System.out.println(style(BOLD, "\n--- EMPLOYEE SELF-SERVICE PORTAL ---"));
+            System.out.println(" Logged in: " + emp.getFullName() + " | Role: " + emp.getRoleTitle() + " | Dept: " + emp.getDepartment());
+            System.out.println(" [1] View My Payslip (Itemized Salary & Take-Home)");
+            System.out.println(" [2] View My Active Benefits & Perks");
+            System.out.println(" [3] View My Overtime & Attendance Record");
+            System.out.println(" [0] Logout");
+
+            choice = input.readInt("Select action [0-3]: ", 0, 3);
+            switch (choice) {
+                case 1:
+                    System.out.println(style(CYAN, "\n=== My Official Payslip ==="));
+                    PaySlip slip = PaySlip.generateFor(emp, 1000 + emp.getEmpId());
+                    System.out.println(PayslipFormatter.formatAsciiSlip(slip));
+                    break;
+                case 2:
+                    System.out.println(style(CYAN, "\n=== My Benefits & Perks ==="));
+                    System.out.println(" Active Perks   : " + PerkBitmaskUtil.describeActivePerks(emp.getPerkBitmask()));
+                    System.out.println(" Perk Allowance : ₹" + emp.getPerkAllowance());
+                    break;
+                case 3:
+                    System.out.println(style(CYAN, "\n=== My Overtime & Attendance Record ==="));
+                    System.out.println(" Total Overtime : " + emp.getTotalOvertimeHours() + " hours");
+                    System.out.println(" Attendance Log : " + AttendanceTracker.getOvertimeAnalyticsSummary(emp));
+                    break;
+                case 0:
+                    System.out.println(style(GREEN, "Logged out of Employee Portal."));
+                    break;
+            }
+        } while (choice != 0);
+    }
+
+    /**
+     * Full Administrative Manager Menu
+     */
+    public void startManagerMenuLoop() {
         PayrollTheme.printBanner();
         int choice;
         do {
-            System.out.println(style(BOLD, "\n--- PAYROLL MAIN MENU ---"));
+            System.out.println(style(BOLD, "\n--- PAYROLL MANAGER / ADMIN MENU ---"));
             System.out.println(" [1] View Staff Roster (Polymorphism)");
             System.out.println(" [2] Hire New Employee (Constructors)");
             System.out.println(" [3] Configure Perks (Bitwise Operators)");
@@ -63,7 +191,7 @@ public class PayrollRouter {
             System.out.println(" [8] Export Payslips to Disk (File I/O)");
             System.out.println(" [9] Import Roster from CSV (File I/O)");
             System.out.println(" [10] Manage Employees (Downcasting & Iterator)");
-            System.out.println(" [0] Exit");
+            System.out.println(" [0] Logout / Return to Portal");
 
             choice = input.readInt("Select action [0-10]: ", 0, 10);
             switch (choice) {
@@ -77,7 +205,7 @@ public class PayrollRouter {
                 case 8: exportFilesFlow(); break;
                 case 9: importCsvFlow(); break;
                 case 10: searchPromoteRemoveFlow(); break;
-                case 0: System.out.println(style(GREEN, "Exiting PayPulse. Goodbye!")); break;
+                case 0: System.out.println(style(GREEN, "Logging out of Manager Menu...")); break;
                 default: System.out.println("Unknown option.");
             }
         } while (choice != 0);
@@ -316,5 +444,21 @@ public class PayrollRouter {
         }
         int idx = input.readInt("Select employee [1-" + staffList.size() + "]: ", 1, staffList.size()) - 1;
         return staffList.get(idx);
+    }
+
+    private Employee findEmployee(String query) {
+        if (query == null || query.trim().isEmpty()) return null;
+        String q = query.trim().toLowerCase();
+        for (Employee e : staffList) {
+            if (String.valueOf(e.getEmpId()).equals(q) || e.getFullName().equalsIgnoreCase(q)) {
+                return e;
+            }
+        }
+        for (Employee e : staffList) {
+            if (e.getFullName().toLowerCase().startsWith(q)) {
+                return e;
+            }
+        }
+        return null;
     }
 }

@@ -112,10 +112,12 @@ java -cp out edu.gitam.oop.payroll.MainApp
 
 ---
 
-## 5. CLI Navigation & Menu Actions
+## 5. CLI Navigation & Role-Based Portals
 
-When launched interactively, PayPulse provides a numeric menu:
+When launched interactively, PayPulse greets the user with a role-based login portal:
 
+### [1] Payroll Manager / HR Admin Portal (Full Access)
+Allows managers to authenticate (prompting password creation on first setup) to access the complete administrative suite:
 1. **View Staff Roster**: Displays active employees, their roles, pay structures, and audit records via polymorphic references.
 2. **Hire New Employee**: Guides onboarding for Full-Time Engineers, Managers, Interns, or Consultants.
 3. **Configure Perks**: Interactively toggle Coffee, Gym, WiFi, and Cab allowances using bitwise masks.
@@ -126,6 +128,12 @@ When launched interactively, PayPulse provides a numeric menu:
 8. **Export Payslips to Disk**: Exports active records to CSV, ASCII archive, and updates the HTML dashboard.
 9. **Import Roster from CSV**: Parses and reconstructs polymorphic employee objects from an external CSV file.
 10. **Manage Employees**: Search staff by name/department, promote eligible engineers to managers, or remove employees by ID.
+
+### [2] Employee Self-Service Portal (Personal Access Only)
+Employees, interns, and contractors log in using their Employee ID or Name (setting their personal password on first login). They can only view their own records:
+1. **View My Payslip**: Displays an itemized salary breakdown (Base, OT, Perks, PF, TDS Tax, Net Take-Home).
+2. **View My Benefits & Perks**: Shows active enrolled perks and their calculated monthly value.
+3. **View My Overtime & Attendance**: Shows total overtime hours logged and individual sprint week breakdowns.
 
 ---
 

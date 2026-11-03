@@ -19,7 +19,7 @@ java -cp out edu.gitam.oop.payroll.MainApp --demo --no-color > /tmp/paypulse_dem
 grep -q "NET TAKE-HOME PAY" /tmp/paypulse_demo.log && echo "    [OK] Multithreaded batch & StringBuffer slips generated!"
 
 echo "==> [4/4] Validating CSV export for CSVLint..."
-printf "8\n0\n" | java -cp out edu.gitam.oop.payroll.MainApp --no-color > /dev/null
+printf "8\n0\n" | java -cp out edu.gitam.oop.payroll.MainApp --admin --no-color > /dev/null
 awk -F',' 'NR==1 {cols=NF} NR>1 && NF!=cols {print "FAIL: CSV row " NR " has " NF " cols (expected " cols ")"; exit 1}' data/payroll_export.csv
 echo "    [OK] data/payroll_export.csv passed column count validation!"
 echo "✅ ALL CHECKS PASSED!"

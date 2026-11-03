@@ -26,6 +26,7 @@ public abstract class Employee extends Person implements TaxablePayable, AuditLo
     private int perkBitmask;
     private double accumulatedSpotBonus;
     private int unapprovedLeaveDays;
+    private String password;
 
     // Irregular (Jagged) 2D Array: 4 weeks, each week can have different number of logged days!
     private int[][] weeklyOvertimeHours;
@@ -144,6 +145,11 @@ public abstract class Employee extends Person implements TaxablePayable, AuditLo
         return (this.baseSalary / WORKING_DAYS_STANDARD) * this.unapprovedLeaveDays;
     }
     public static int getTotalActiveObjects() { return totalActiveObjects; }
+
+    // Authentication for Employee Self-Service
+    public boolean hasPassword() { return this.password != null && !this.password.isEmpty(); }
+    public void setPassword(String password) { this.password = password; }
+    public boolean verifyPassword(String input) { return this.password != null && this.password.equals(input); }
 
     @Override
     public String toString() {
