@@ -1,7 +1,6 @@
 # PayPulse — Employee Payroll Management System
 
 [![Java](https://img.shields.io/badge/Java-17%2B-blue.svg)](#prerequisites)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](#license)
 [![Architecture](https://img.shields.io/badge/Design-Pure%20OOP-orange.svg)](#core-concepts--usage)
 
 A modular, zero-dependency Java payroll processing engine featuring a command-line interface, multi-threaded batch processing, bitwise perk encoding, and an interactive HTML audit ledger.
@@ -141,9 +140,3 @@ The project includes built-in verification scripts:
 # Run end-to-end automated test suite across all 10 menu workflows
 ./tools/test_flows.sh
 ```
-
----
-
-## 7. License
-
-This project is licensed under the MIT License.
