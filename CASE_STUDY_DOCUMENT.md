@@ -31,7 +31,9 @@ PayPulse was created to solve these exact challenges: it unifies all employee ty
 
 The complete, open-source codebase for PayPulse is hosted on GitHub:
 
-🔗 **[PayPulse Payroll System on GitHub](https://github.com/sampathvulli7/PayPulsePayrollSystem)**
+🔗 **GitHub Repository:**  
+**[https://github.com/sampathvulli7/PayPulsePayrollSystem](https://github.com/sampathvulli7/PayPulsePayrollSystem)**  
+*(Direct URL: `https://github.com/sampathvulli7/PayPulsePayrollSystem`)*
 
 > **Pre-compiled Executable JAR Available:**  
 > A ready-to-run file named **`paypulse.jar`** is included directly in the repository. This means anyone can download and run the entire application immediately without needing to install developer software or compile any code.
@@ -41,7 +43,7 @@ The complete, open-source codebase for PayPulse is hosted on GitHub:
 ### Simple Instructions: How to Download & Run
 
 #### Step 1: Download the Project ZIP
-1. Open the GitHub repository: **[PayPulse on GitHub](https://github.com/sampathvulli7/PayPulsePayrollSystem)**.
+1. Open the GitHub repository: **[https://github.com/sampathvulli7/PayPulsePayrollSystem](https://github.com/sampathvulli7/PayPulsePayrollSystem)**.
 2. Click the green **`<> Code`** button near the top right of the page.
 3. Select **`Download ZIP`** from the dropdown menu.
 4. Once downloaded, right-click the `.zip` file on your computer and select **Extract All** (or double-click to unzip).
