@@ -148,3 +148,15 @@ Shows the interactive web dashboard automatically updated by the PayPulse export
 >   * **Bitwise Perks (`PerkBitmaskUtil.java`):** Packs 4 benefit flags into a single 32-bit integer mask using `&`, `|`, `^`, and `<<` (left-shift doubles Manager allowances).
 >   * **Jagged 2D Arrays (`Employee.java`):** Uses variable-length sub-arrays (`int[][]`) to capture real-world sprint weeks with different numbers of working days.
 >   * **Multithreading (`PayrollBatchWorker.java`):** Divides the employee roster across concurrent background worker threads to process payslips in parallel safely.
+
+---
+
+## 6. Project Team Members
+
+| S.No. | Group Member Name | University Roll No. |
+| :---: | :--- | :---: |
+| 1 | **Sampath Vulli** | `2025019557` |
+| 2 | **Karanam Balaji Sreekar** | `2025215940` |
+| 3 | **RV. Karthik** | `2025022897` |
+| 4 | **B. Sankranth** | `2025016342` |
+| 5 | **Shaik Jinna** | `2025016258` |
