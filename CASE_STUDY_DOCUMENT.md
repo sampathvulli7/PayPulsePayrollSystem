@@ -125,3 +125,26 @@ Shows the interactive web dashboard automatically updated by the PayPulse export
   * **Live KPI Cards:** Displays high-level totals including **Total Net Pay** (`₹3,88,158`), Gross Obligations, Total Tax Withholding, and Active Headcount.
   * **Interactive Staff Ledger:** A clean, sortable table displaying all employees (such as Aarav Sharma, sampath vulli, Diya Nair, Vikram Patel) alongside their designations, base pay, gross pay, deductions, and net take-home salary.
   * **Instant Search & Filter:** A real-time search bar allows filtering by name, department, or employment type. Clicking any row opens an itemized pay-stub drawer.
+
+---
+
+## 5. Quick OOP Cheat-Sheet: How OOP Powers PayPulse
+
+> ### 💡 OOP Concepts in Action (Student Quick Reference)
+>
+> * **🔒 Encapsulation (`Employee.java` & `Person.java`)**  
+>   Sensitive fields (salaries, bank accounts, login passwords) are declared `private` and protected by getters, setters, and validation checks like `verifyPassword()`.
+>
+> * **🌳 Multilevel Inheritance (`Person` $\rightarrow$ `Employee` $\rightarrow$ `FullTimeEmployee` $\rightarrow$ `Manager`)**  
+>   Builds a clean 4-tier hierarchy. Subclasses automatically inherit personal and employee details from parent classes while adding role-specific fields (like `teamSize` for Managers or `hourlyRate` for Interns).
+>
+> * **🎭 Polymorphism & Dynamic Dispatch (`PayrollRouter.java`)**  
+>   We store different employee types inside a single `List<Employee>`. Calling `emp.calculateNetPay()` automatically executes the exact formula for that specific role (Manager, Engineer, Intern, or Consultant) at runtime without rigid `if-else` blocks.
+>
+> * **🧩 Abstraction & Interfaces (`Payable.java`, `TaxablePayable.java`, `AuditLoggable.java`)**  
+>   `Employee` is an `abstract class` specifying mandatory template methods (`getRoleTitle()`), while interfaces define clean compensation contracts and nested audit integrity checks.
+>
+> * **⚡ Core Systems Highlights:**  
+>   * **Bitwise Perks (`PerkBitmaskUtil.java`):** Packs 4 benefit flags into a single 32-bit integer mask using `&`, `|`, `^`, and `<<` (left-shift doubles Manager allowances).
+>   * **Jagged 2D Arrays (`Employee.java`):** Uses variable-length sub-arrays (`int[][]`) to capture real-world sprint weeks with different numbers of working days.
+>   * **Multithreading (`PayrollBatchWorker.java`):** Divides the employee roster across concurrent background worker threads to process payslips in parallel safely.
