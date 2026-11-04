@@ -33,16 +33,16 @@ The complete, open-source codebase for PayPulse is hosted on GitHub:
 
 🔗 **[PayPulse Payroll System on GitHub](https://github.com/sampathvulli7/PayPulsePayrollSystem)**
 
-> **Ready-to-Run JAR File Available:**  
-> A pre-compiled, standalone executable file named **`paypulse.jar`** is already included directly in the repository. This means anyone can download and run the entire system immediately without needing any programming software or manual compiling.
+> **Pre-compiled Executable JAR Available:**  
+> A ready-to-run file named **`paypulse.jar`** is included directly in the repository. This means anyone can download and run the entire application immediately without needing to install developer software or compile any code.
 
 ---
 
 ### Simple Instructions: How to Download & Run
 
 #### Step 1: Download the Project ZIP
-1. Click the GitHub link: [https://github.com/sampathvulli7/PayPulsePayrollSystem](https://github.com/sampathvulli7/PayPulsePayrollSystem).
-2. Click the green **`<> Code`** button near the top right.
+1. Open the GitHub repository: **[PayPulse on GitHub](https://github.com/sampathvulli7/PayPulsePayrollSystem)**.
+2. Click the green **`<> Code`** button near the top right of the page.
 3. Select **`Download ZIP`** from the dropdown menu.
 4. Once downloaded, right-click the `.zip` file on your computer and select **Extract All** (or double-click to unzip).
 
@@ -51,11 +51,11 @@ The complete, open-source codebase for PayPulse is hosted on GitHub:
 * **On Windows (Using the `.bat` file):**
   1. Open the unzipped `PayPulsePayrollSystem` folder.
   2. Double-click the file named **`run.bat`**.
-  3. The application will start immediately in your Command Prompt!
+  3. The application will launch immediately inside your Command Prompt window!
 
 * **On macOS / Linux (Using Terminal):**
-  1. Open Terminal in the extracted folder.
-  2. Run the command:
+  1. Open Terminal inside the extracted folder.
+  2. Type the following command and press Enter:
      ```bash
      ./run
      ```
@@ -65,36 +65,63 @@ The complete, open-source codebase for PayPulse is hosted on GitHub:
 
 ## 4. Output Screenshots Showing the Results
 
-### 1. Automated Batch Processing & Live Progress
-Shows PayPulse processing monthly salaries across all employees in parallel, rendering real-time progress indicators and total disbursement figures.
+### Screenshot 1: Role-Based Portal Selection & Secure Gateway
+Shows the initial welcoming terminal interface upon starting the PayPulse application.
 
-![Figure 1: Automated Concurrent Batch Run](docs/images/image1.png)
+![Screenshot 1: Role-Based Portal Selection](docs/images/1_portal_login.png)
 
-*Figure 1: Automated batch run showing multi-threaded payroll calculation and export confirmations.*
-
----
-
-### 2. HR / Manager Administrative Console
-Shows the central management menu where administrators can inspect the live staff roster, hire new team members, toggle benefits, and manage compensation.
-
-![Figure 2: PayPulse Manager Console](docs/images/image2.png)
-
-*Figure 2: Administrative console displaying the active employee roster and operations menu.*
+#### Description & Tutorial:
+* **What you see:** When PayPulse is launched, it displays the main system banner and immediately prompts the user to select their role:
+  * **Option [1]: Payroll Manager / HR Admin** (Full administrative privileges)
+  * **Option [2]: Employee Self-Service** (Restricted, personal access only)
+  * **Option [0]: Exit Application**
+* **How it works:** This acts as the frontline security gate. Normal employees and interns cannot bypass this screen to inspect company-wide finances. Selecting an option seamlessly routes the user to the appropriate authentication flow.
 
 ---
 
-### 3. Confidential Employee Payslip & Watermark
-Shows an official payslip generated for an employee, complete with privacy-masked bank account details, itemized deductions (TDS Tax and Provident Fund), and an anti-tamper security watermark.
+### Screenshot 2: HR / Payroll Manager Console & Authentication
+Shows a successful administrative login leading to the comprehensive management dashboard.
 
-![Figure 3: Confidential ASCII Payslip](docs/images/image3.png)
+![Screenshot 2: Manager Administrative Dashboard](docs/images/2_manager_menu.png)
 
-*Figure 3: Confidential itemized payslip with in-place bank masking and security verification.*
+#### Description & Tutorial:
+* **What you see:** The terminal shows the Payroll Administrator logging in, setting/verifying credentials, and accessing the **Full 10-Option Administrative Menu**.
+* **Key Operations Available:**
+  1. **View Staff Roster:** Displays active employees, salary structures, and live audit records.
+  2. **Hire New Employee:** Onboards Full-Time Engineers, Managers, Interns, or Consultants.
+  3. **Configure Perks:** Interactively toggles Coffee, Gym, WiFi, and Cab allowances using compact bitwise masks.
+  4. **Log Weekly Overtime:** Records sprint attendance and overtime in irregular work-week matrices.
+  5. **Award Spot Bonus:** Grants discretionary bonuses (flat amount, percentage, or multi-award bundles).
+  6. **Run Payroll Batch:** Triggers background multi-threaded calculation with live progress bars.
+  7. **Filter & Sort Staff:** Ranks staff by net take-home pay or filters high earners using lambda predicates.
+  8. **Export Payslips to Disk:** Writes CSV spreadsheets, ASCII slip archives, and syncs the web dashboard.
+  9. **Import Roster from CSV:** Reconstructs employee objects from an external CSV file.
+  10. **Manage Employees:** Search staff by keyword, promote engineers to managers, or remove records.
 
 ---
 
-### 4. Interactive Web Dashboard & Audit Ledger
-Shows the interactive web dashboard automatically updated by the system, featuring high-level financial summary cards, visual disbursement bars, and a searchable ledger table.
+### Screenshot 3: Confidential Employee Payslip & CSV Disk Archive
+Shows the generated ASCII payslip in the terminal with the exported `payroll_export.csv` file open in the editor.
 
-![Figure 4: PayPulse HTML Web Dashboard](docs/images/image4.png)
+![Screenshot 3: Confidential Payslip & CSV Export](docs/images/3_payslip_output.png)
 
-*Figure 4: Interactive HTML web dashboard displaying real-time payroll metrics and audit records.*
+#### Description & Tutorial:
+* **What you see:** The terminal outputs a clean, official payslip formatted for privacy and audit compliance:
+  * **Privacy Protection:** Bank account numbers are masked in-place (e.g., `********8811`).
+  * **Department & Perks:** Automatically extracts 3-letter department codes (e.g., `BAC`) and lists active benefits (`[Coffee] [Gym]`).
+  * **Transparent Deductions:** Itemizes Gross Earnings, Provident Fund (12%), and Progressive Tax (TDS) to arrive at the final **Net Take-Home Pay**.
+  * **Anti-Tamper Watermark:** Appends a dynamic security hash (`48846-201PME`) generated from the employee's ID and net earnings.
+  * **Disk Export:** In the editor background, `data/payroll_export.csv` demonstrates that all 11 columns of financial data are synchronized to disk for corporate records.
+
+---
+
+### Screenshot 4: Interactive Web Dashboard & Audit Ledger
+Shows the interactive web dashboard automatically updated by the PayPulse export engine.
+
+![Screenshot 4: PayPulse Web Dashboard](docs/images/4_web_dashboard.png)
+
+#### Description & Tutorial:
+* **What you see:** Opening `data/payroll_dashboard.html` in any web browser opens a modern, responsive compensation dashboard:
+  * **Live KPI Cards:** Displays high-level totals including **Total Net Pay** (`₹3,88,158`), Gross Obligations, Total Tax Withholding, and Active Headcount.
+  * **Interactive Staff Ledger:** A clean, sortable table displaying all employees (such as Aarav Sharma, sampath vulli, Diya Nair, Vikram Patel) alongside their designations, base pay, gross pay, deductions, and net take-home salary.
+  * **Instant Search & Filter:** A real-time search bar allows filtering by name, department, or employment type. Clicking any row opens an itemized pay-stub drawer.
